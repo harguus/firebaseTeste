@@ -9,10 +9,16 @@ import {
 
 export default class App extends Component<Props> {
 
+  // constructor(props){
+  //   super(props);
+  //
+  //   this.state = {pontos: 0};
+  //
+  // }
   constructor(props){
     super(props);
 
-    this.state = {pontos: 0};
+    this.state = {erroMessege: ''};
 
   }
 
@@ -30,37 +36,75 @@ export default class App extends Component<Props> {
 
   }
 
-  salvarDados(){
-    var funcionarios = firebase.database().ref("funcionarios");
-    // database.ref("pontuacao").remove();
+  // salvarDados(){
+  //   var funcionarios = firebase.database().ref("funcionarios");
+  //   // database.ref("pontuacao").remove();
+  //
+  //   // funcionarios.child("001").child("nome").set("Jamilton");
+  //   // funcionarios.push().child("nome").set("Jamilton");
+  //   // funcionarios.push().set(
+  //   //   {nome: "Jamilton Damasceno",
+  //   //   altura: "1,75",
+  //   //   peso: "70kg"}
+  //   // );
+  // }
 
-    // funcionarios.child("001").child("nome").set("Jamilton");
-    // funcionarios.push().child("nome").set("Jamilton");
-    // funcionarios.push().set(
-    //   {nome: "Jamilton Damasceno",
-    //   altura: "1,75",
-    //   peso: "70kg"}
-    // );
+  // listarDados(){
+  //   var pontuacao = firebase.database().ref("pontuacao");
+  //   // adiciona um listener
+  //   pontuacao.on('value', (snapshot) => {
+  //     this.setState({pontos: snapshot.val()});
+  //   });
+  // }
+
+
+  // render() {
+  //   return (
+  //     <View>
+  //
+  //       <Button
+  //         onPress={() => {this.salvarDados();}}
+  //         title="Salvar dados"
+  //         color="#841584"
+  //         accessibilityLabel="Salvar dados"
+  //       />
+  //
+  //       <Button
+  //         onPress={() => {this.listarDados();}}
+  //         title="Listar dados"
+  //         color="#841584"
+  //         accessibilityLabel="Salvar dados"
+  //       />
+  //       <Text>{this.state.pontos}</Text>
+  //     </View>
+  //   );
+
+  cadastrarUsuario(){
+    var email = "a@aaa.com";
+    var senha = "123456";
+
+    const user = firebase.auth();
+    user.createUserWithEmailAndPassword(
+      email,
+      senha
+    ).catch(
+      (e) => {
+        //e.code
+        //e.message
+        this.setState({erroMessege: e.message});
+      }
+    );
   }
-
-  listarDados(){
-    var pontuacao = firebase.database().ref("pontuacao");
-    // adiciona um listener
-    pontuacao.on('value', (snapshot) => {
-      this.setState({pontos: snapshot.val()});
-    });
-  }
-
 
   render() {
     return (
       <View>
 
         <Button
-          onPress={() => {this.salvarDados();}}
-          title="Salvar dados"
+          onPress={() => {this.cadastrarUsuario();}}
+          title="Cadastrar usuario"
           color="#841584"
-          accessibilityLabel="Salvar dados"
+          accessibilityLabel="Cadastrar usuario"
         />
 
         <Button
@@ -69,7 +113,7 @@ export default class App extends Component<Props> {
           color="#841584"
           accessibilityLabel="Salvar dados"
         />
-        <Text>{this.state.pontos}</Text>
+        <Text>{this.state.erroMessege}</Text>
       </View>
     );
   }
