@@ -96,6 +96,35 @@ export default class App extends Component<Props> {
     );
   }
 
+  verificarUsuarioLogado(){
+    const usuario = firebase.auth();
+
+    // método 1
+    // const usuarioAtual = usuario.currentUser;
+    //
+    // if (usuarioAtual) {
+    //   // converte obg para string
+    //   // const str = JSON.stringify(usuarioAtual);
+    //   Alert.alert("usuário logado");
+    // }else {
+    //   Alert.alert("usuário não está logado");
+    // }
+
+    // método 2
+    //  recomendado.
+    usuario.onAuthStateChanged(
+      (usuarioAtual)=> {
+        if (usuarioAtual) {
+          // converte obg para string
+          // const str = JSON.stringify(usuarioAtual);
+          Alert.alert("usuário logado");
+        }else {
+          Alert.alert("usuário não está logado");
+        }
+      }
+    );
+  }
+
   render() {
     return (
       <View>
@@ -108,10 +137,9 @@ export default class App extends Component<Props> {
         />
 
         <Button
-          onPress={() => {this.listarDados();}}
-          title="Listar dados"
+          onPress={() => {this.verificarUsuarioLogado();}}
+          title="Verificar usuário logado"
           color="#841584"
-          accessibilityLabel="Salvar dados"
         />
         <Text>{this.state.erroMessege}</Text>
       </View>
