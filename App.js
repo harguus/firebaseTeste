@@ -125,6 +125,27 @@ export default class App extends Component<Props> {
     );
   }
 
+  deslogaUsuario(){
+    const usuario = firebase.auth();
+
+    usuario.signOut();
+  }
+
+  logarUsuario(){
+    var email = "a@aaa.com";
+    var senha = "123456";
+
+    const usuario = firebase.auth();
+
+    usuario.signInWithEmailAndPassword(
+      email, senha
+    ).catch(
+      (error) => {
+        Alert.alert(error.message);
+      }
+    );
+  }
+
   render() {
     return (
       <View>
@@ -139,6 +160,18 @@ export default class App extends Component<Props> {
         <Button
           onPress={() => {this.verificarUsuarioLogado();}}
           title="Verificar usuário logado"
+          color="#841584"
+        />
+
+        <Button
+          onPress={() => {this.deslogaUsuario();}}
+          title="Deslogar usuário"
+          color="#841584"
+        />
+
+        <Button
+          onPress={() => {this.logarUsuario();}}
+          title="Logar usuário"
           color="#841584"
         />
         <Text>{this.state.erroMessege}</Text>
